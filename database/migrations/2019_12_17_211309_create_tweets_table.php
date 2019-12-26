@@ -14,14 +14,15 @@ class CreateTweetsTable extends Migration
     public function up()
     {
         Schema::create('tweets', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('user_id')->nullable();
-            $table->integer('activity_id');
-            $table->string('tweet_id');
-            $table->text('body')->nullable();
-            $table->string('hour')->nullable()->default(0);
+            $table->string('id')->primary()->comment('tweetId');
+            $table->text('content')->comment('tweet内容');
+            $table->time('hour')->comment('時間');
+            $table->unsignedInteger('activity_id');
             $table->timestamps();
-            $table->softDeletes();
+
+            $table->foreign('activity_id')
+                ->references('id')->on('activities')
+                ->onDelete('cascade');
         });
     }
 

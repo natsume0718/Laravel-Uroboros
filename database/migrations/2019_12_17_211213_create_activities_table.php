@@ -15,13 +15,16 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('task_id')->nullable()->default(0);
-            $table->integer('user_id');
-            $table->string('name')->nullable()->default(null);
-            $table->string('hour')->nullable()->default(0);
-            $table->integer('continuation_days')->nullable()->default(0);
+            $table->string('name')->index()->comment('活動名');
+            $table->string('total')->default(0)->index()->comment('合計時間');
+            $table->integer('continuation_days')->default(0)->comment('継続日数');
+            $table->integer('activity_days')->default(0)->comment('継続日数');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
-            $table->softDeletes();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 
