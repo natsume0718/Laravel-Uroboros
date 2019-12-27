@@ -77,6 +77,11 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
         ],
+        'testing' => [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ],
 
     ],
 
