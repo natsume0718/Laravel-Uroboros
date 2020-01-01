@@ -4,8 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use App\Activity;
-use Illuminate\Support\Facades\Auth;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,11 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-
         parent::boot();
-        Route::bind('activity', function ($value) {
-            return Activity::where('user_id', Auth::id())->where('task_id', $value)->first() ?? abort(404);
-        });
     }
 
     /**
