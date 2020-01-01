@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Support\Facades\Auth;
 use Closure;
+use Illuminate\Http\Request;
 
 class UserNameMiddleware
 {
@@ -14,11 +14,12 @@ class UserNameMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
+        $user = $request->user();
         //ログインしていない、ユーザー名が一致していない場合
-        if (!Auth::check() || $request->user_name != Auth::user()->twitter_nickname) {
-            return redirect()->route('top');
+        if (!$user || $request->user_name !== $user->nickname) {
+            return redirect()->back();
         }
         return $next($request);
     }
