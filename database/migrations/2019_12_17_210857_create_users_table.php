@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name')->index()->comment('画面表示名');
             $table->string('nickname')->default(null)->index()->comment('@名');
             $table->string('avatar')->index()->comment('アイコン');
-            $table->string('oauth_token')->nullable()->default(null);
-            $table->string('oauth_token_secret')->nullable()->default(null);
+            $table->string('token')->nullable()->default(null);
+            $table->string('token_secret')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
         });
