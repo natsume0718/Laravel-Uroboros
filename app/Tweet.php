@@ -9,32 +9,17 @@ use Carbon\Carbon;
 
 class Tweet extends Model
 {
-    use SoftDeletes;
-
-    protected $table = 'tweets';
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'tweet_id',
-        'body',
-        'hour'
+        'id',
+        'content',
+        'activity_id'
     ];
 
-    /**
-     * 日付を変形する属性
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
 
     public function activity()
     {
@@ -56,5 +41,4 @@ class Tweet extends Model
     {
         return $query->where('hour', '>', 0);
     }
-
 }

@@ -12,7 +12,7 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
-    protected $table = 'users';
+    protected $rememberTokenName = false;
 
     /**
      * The attributes that are mass assignable.
@@ -20,12 +20,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'twitter_id',
-        'twitter_name',
-        'twitter_nickname',
-        'twitter_avatar',
-        'twitter_oauth_token',
-        'twitter_oauth_token_secret'
+        'id',
+        'name',
+        'nickname',
+        'avatar',
+        'token',
+        'token_secret'
     ];
 
     /**
@@ -34,8 +34,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $dates = [
-        'created_at',
-        'updated_at',
         'deleted_at'
     ];
 

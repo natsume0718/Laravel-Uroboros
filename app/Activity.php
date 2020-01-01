@@ -9,10 +9,6 @@ use App\Tweet;
 
 class Activity extends Model
 {
-    use SoftDeletes;
-
-    protected $table = 'activities';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -20,21 +16,9 @@ class Activity extends Model
      */
     protected $fillable = [
         'name',
-        'task_id',
-        'hour',
+        'total',
         'continuation_days',
-        'days_of_activity'
-    ];
-
-    /**
-     * 日付を変形する属性
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
+        'activity_days'
     ];
 
     public function user()
@@ -45,5 +29,10 @@ class Activity extends Model
     public function tweets()
     {
         return $this->hasMany(Tweet::class);
+    }
+
+    public function scopeColumns($query)
+    {
+        return $query->select(['id', 'name', 'total', 'continuation_days', 'activity_days', 'user_id']);
     }
 }
