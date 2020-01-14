@@ -2,8 +2,8 @@
 
 @section('content')
 <section>
-@include('layouts.message')
-<div id="app-features" class="section">
+	@include('layouts.message')
+	<div id="app-features" class="section">
 		<div class="container">
 			<div class="section-header">
 				<p class="btn btn-subtitle">
@@ -19,23 +19,23 @@
 						@foreach ($activities as $activity)
 						<ul class="list-group">
 							<li class="list-group-item" style="color:black">{{ $activity->name }}</li>
-							<li class="list-group-item">合計時間：{{ $activity->hour }} 時間</li>
-								<li class="list-group-item">作成日:{{ $activity->created_at }}</li>
-								<li class="list-group-item">
-									<a class="btn btn-info"
-										href="{{ route('activity.show',[$user->twitter_nickname ,$activity->task_id]) }}"
-										role="button" style="margin-bottom:0.8em">記録する</a>
-								</li>
-								<li class="list-group-item">
-									{!! Form::open(['method' => 'DELETE','route'
-									=>['activity.delete',$user->twitter_nickname,$activity->task_id],
-									'class'=>'d-inline'])
-									!!}
-									{!! Form::submit('削除', ['class'=>'btn btn-danger']) !!}
-									{!! Form::close() !!}
-								</li>
+							<li class="list-group-item">合計時間：{{ $activity->hour ?? 0 }} 時間</li>
+							<li class="list-group-item">作成日:{{ $activity->created_at }}</li>
+							<li class="list-group-item">
+								<a class="btn btn-info"
+									href="{{ route('activity.show',[$user->nickname ,$activity->name]) }}" role="button"
+									style="margin-bottom:0.8em">記録する</a>
+							</li>
+							<li class="list-group-item">
+								{!! Form::open(['method' => 'DELETE','route'
+								=>['activity.destroy',$user->nickname,$activity->id],
+								'class'=>'d-inline'])
+								!!}
+								{!! Form::submit('削除', ['class'=>'btn btn-danger']) !!}
+								{!! Form::close() !!}
+							</li>
 						</ul>
-					</br>
+						</br>
 						@endforeach
 					</div>
 				</div>
@@ -45,7 +45,7 @@
 				<div class="col-lg-4 col-md-12 col-xs-12"></div>
 				<div class="col-lg-4 col-md-12 col-xs-12">
 					<div class="show-box">
-						{!! Form::open(['route' => ['activity.store',$user->twitter_nickname]]) !!}
+						{!! Form::open(['route' => ['activity.store',$user->nickname]]) !!}
 						<div class="form-group">
 							{!! Form::label('name', '※継続したい活動名：') !!}
 							{!! Form::text('name', old('name'), ['class' => 'form-control']) !!}

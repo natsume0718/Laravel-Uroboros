@@ -2,12 +2,10 @@
 
 @section('content')
 <section>
-@include('layouts.message')
+	@include('layouts.message')
 	<div id="app-features" class="section">
 		<div class="container">
 			<div class="section-header">
-				<p class="btn btn-subtitle">
-					No.{{ $activity->task_id }}</p>
 				<h2 class="section-title wow fadeIn animated" data-wow-delay="0.2s"
 					style="visibility: visible;-webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
 					{{ $activity->name }}</h2>
@@ -16,19 +14,19 @@
 				<div class="col-lg-4 col-md-12 col-xs-12"></div>
 				<div class="col-lg-4 col-md-12 col-xs-12">
 					<div class="show-box">
-						<a href="{{ route('activity.index',$user->twitter_nickname) }}">マイページへ</a>
+						<a href="{{ route('activity.index',$user->nickname) }}">マイページへ</a>
 						<ul class="list-group">
-							<li class="list-group-item">合計時間：{{ $activity->hour }} 時間</li>
-							<li class="list-group-item">活動日数：{{ $activity->days_of_activity }} 日目</li>
+							<li class="list-group-item">合計時間：{{ $total->total_hour ?? 0 }} 時間</li>
+							<li class="list-group-item">活動日数：{{ $activity->activity_days }} 日目</li>
 							<li class="list-group-item">継続日数：{{ $activity->continuation_days }} 日</li>
 						</ul>
 						{!! Form::label('disp', '前回の投稿をフォームに表示：') !!}
 						{!! Form::checkbox('disp', old('disp'),false, ['id'=>'js-check']) !!}
 						{!! Form::open(['method' => 'PATCH','route' =>
-						['activity.tweet',$user->twitter_nickname,$activity->task_id]]) !!}
+						['activity.update',$user->nickname,$activity->name]]) !!}
 						<div class="form-group">
 							{!! Form::label('hour', '活動時間：') !!}
-							{!! Form::select('hour', $time,old('hour'), ['class' =>
+							{!! Form::time('hour',old('hour'), ['class' =>
 							'form-control','id'=>'js-selectbox','min'=>'0']) !!}
 							@if ($errors->has('hour'))
 							<span style="color:red;">
@@ -49,7 +47,7 @@
 						</div>
 						<div class="form-group">
 							{!! Form::label('is_reply', 'リプライ形式で投稿：') !!}
-							{!! Form::checkbox('is_reply', old('is_reply'), ['class' => 'form-control']) !!}
+							{!! Form::checkbox('is_reply', 1, ['class' => 'form-control']) !!}
 							@if ($errors->has('is_reply'))
 							<span style="color:red;">
 								{{ $errors->first('is_reply') }}
@@ -65,8 +63,8 @@
 			</div>
 		</div>
 	</div>
- <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+	<div class="row justify-content-center">
+		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
 			<div class="table-responsive" style="height:40vh; overflow: scroll; margin-top:1em;">
 				@isset($tweets)
 				<table class="table table-stiped table-bordered" style="background-color:white;">
@@ -107,54 +105,3 @@
 	</div>
 </section>
 @endsection
-
-<script type="text/javascript">
-window.addEventListener('DOMContentLoaded', function () {
-	let check = document.getElementById("js-check");
-	let selectbx = document.getElementById("js-selectbox");
-    if (check) {
-        check.addEventListener('click', function () {
-			let input_php = document.getElementById("js-countText");
-            if (this.checked) {
-				@isset($latest_tweet)
-				let prev_time = @json($latest_tweet->hour);
-				let today = @json($activity->days_of_activity);
-				let serch = "Day：" + today + "\n活動時間：" + prev_time + "h\n";
-				input_php.value = @json($latest_tweet->body);
-				let regExp = new RegExp(serch,"g");
-				input_php.value = input_php.value.replace(regExp,"");
-				@endisset
-            }else{
-				input_php.value = "";
-			}
-        });
-	}
-	if(selectbx) {
-		//取得
-		let prev_textbox_str = document.getElementById("js-countText");
-		let text = "";	
-		//セレクトから外れたときにも取得
-		selectbx.addEventListener('focus', function () {
-			prev_textbox_str = document.getElementById("js-countText").value;
-			let regExp = new RegExp(text,"g");
-			prev_textbox_str = prev_textbox_str.replace(regExp,"");
-		});
-		selectbx.addEventListener('click', function () {
-			let options = this.options;
-			let selected_text = options[options.selectedIndex].text;
-			let tomorrow  = @json($activity->days_of_activity) + 1;
-			text = "Day：" + tomorrow + "\n活動時間："+ selected_text + "h\n";
-			let current_text = document.getElementById("js-countText");
-			current_text.value = text + prev_textbox_str;
-		});
-		selectbx.addEventListener('change', function () {
-			let options = this.options;
-			let selected_text = options[options.selectedIndex].text;
-			let tomorrow  = @json($activity->days_of_activity) + 1;
-			text = "Day：" + tomorrow + "\n活動時間："+ selected_text + "h\n";
-			let current_text = document.getElementById("js-countText");
-			current_text.value = text + prev_textbox_str;
-		});
-	}
-});
-</script>
