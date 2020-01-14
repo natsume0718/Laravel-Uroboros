@@ -8,10 +8,11 @@ window._ = require('lodash');
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap-sass');
-} catch (e) {}
+    window.Popper = require('mdbootstrap/js/popper').default;
+    window.$ = window.jQuery = require('mdbootstrap/js/jquery');
+    require('mdbootstrap/js/bootstrap');
+    require('mdbootstrap');
+} catch (e) { }
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
