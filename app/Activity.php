@@ -5,10 +5,12 @@ namespace App;
 use App\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-use App\Tweet;
+use App\Post;
 
 class Activity extends Model
 {
+
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -16,7 +18,6 @@ class Activity extends Model
      */
     protected $fillable = [
         'name',
-        'total',
         'continuation_days',
         'activity_days'
     ];
@@ -26,13 +27,13 @@ class Activity extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function tweets()
+    public function posts()
     {
-        return $this->hasMany(Tweet::class);
+        return $this->hasMany(Post::class);
     }
 
     public function scopeColumns($query)
     {
-        return $query->select(['id', 'name', 'total', 'continuation_days', 'activity_days', 'user_id']);
+        return $query->select(['id', 'name', 'continuation_days', 'activity_days', 'user_id']);
     }
 }
