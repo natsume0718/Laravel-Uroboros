@@ -17,9 +17,10 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('id')->primary()->comment('twitterのユーザーId');
             $table->string('name')->index()->comment('画面表示名');
             $table->string('nickname')->default(null)->index()->comment('@名');
-            $table->string('avatar')->index()->comment('アイコン');
-            $table->string('token')->nullable()->default(null);
-            $table->string('token_secret')->nullable()->default(null);
+            $table->string('avatar')->comment('アイコンのurl');
+            $table->string('token')->comment('token');
+            $table->string('token_secret')->comment('secret token');
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
