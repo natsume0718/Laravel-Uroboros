@@ -6,12 +6,15 @@
     "type": "project",
     "require": {
         "php": "^7.2",
+        "abraham/twitteroauth": "^1.1",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.5",
+        "htmlmin/htmlmin": "^6.0",
         "laravel/framework": "^6",
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
-        "laravelcollective/html": "^6.0"
+        "laravelcollective/html": "^6.0",
+        "nojimage/twitter-text-php": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

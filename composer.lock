@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b2f988a18cd6f4f388359969f743226",
+    "content-hash": "8adb55615536e6844905d4c31b95e8b0",
     "packages": [
+        {
+            "name": "abraham/twitteroauth",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/abraham/twitteroauth.git",
+                "reference": "d54b71c2eee94252154e7b50656e17422fa0b9e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/abraham/twitteroauth/zipball/d54b71c2eee94252154e7b50656e17422fa0b9e1",
+                "reference": "d54b71c2eee94252154e7b50656e17422fa0b9e1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^7.2 || ^7.3"
+            },
+            "require-dev": {
+                "phpmd/phpmd": "~2.6",
+                "phpunit/phpunit": "~5.7",
+                "squizlabs/php_codesniffer": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Abraham\\TwitterOAuth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abraham Williams",
+                    "email": "abraham@abrah.am",
+                    "homepage": "https://abrah.am",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The most popular PHP library for use with the Twitter OAuth REST API.",
+            "homepage": "https://twitteroauth.com",
+            "keywords": [
+                "Twitter API",
+                "Twitter oAuth",
+                "api",
+                "oauth",
+                "rest",
+                "social",
+                "twitter"
+            ],
+            "time": "2019-11-29T14:55:32+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "v0.1.1",
@@ -521,6 +575,81 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "htmlmin/htmlmin",
+            "version": "v6.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/HTMLMin/Laravel-HTMLMin.git",
+                "reference": "5351960ee6a9e48d9562b57003db5782a4cc5eab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/HTMLMin/Laravel-HTMLMin/zipball/5351960ee6a9e48d9562b57003db5782a4cc5eab",
+                "reference": "5351960ee6a9e48d9562b57003db5782a4cc5eab",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0",
+                "illuminate/filesystem": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0",
+                "illuminate/http": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0",
+                "illuminate/routing": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0",
+                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0",
+                "illuminate/view": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0",
+                "mrclay/minify": "^2.2",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "graham-campbell/testbench": "^3.1|^4.0|^5.0",
+                "mockery/mockery": "^0.9.4|^1.0",
+                "phpunit/phpunit": "^4.8|^5.0|^6.0|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "HTMLMin\\HTMLMin\\HTMLMinServiceProvider"
+                    ],
+                    "aliases": {
+                        "HTMLMin": "HTMLMin\\HTMLMin\\Facades\\HTMLMin"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "HTMLMin\\HTMLMin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                },
+                {
+                    "name": "Raza Mehdi",
+                    "email": "srmk@outlook.com"
+                }
+            ],
+            "description": "HTMLMin Is A Simple HTML Minifier For Laravel 5",
+            "keywords": [
+                "Laravel HTMLMin",
+                "Laravel-HTMLMin",
+                "framework",
+                "html",
+                "html minifier",
+                "htmlmin",
+                "laravel",
+                "minifier"
+            ],
+            "time": "2019-10-20T14:34:11+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1317,6 +1446,51 @@
             "time": "2019-12-20T14:22:59+00:00"
         },
         {
+            "name": "mrclay/minify",
+            "version": "2.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mrclay/minify.git",
+                "reference": "1928e89208d28e91427b2f13b67acdbd8cd01ac9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrclay/minify/zipball/1928e89208d28e91427b2f13b67acdbd8cd01ac9",
+                "reference": "1928e89208d28e91427b2f13b67acdbd8cd01ac9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "tubalmartin/cssmin": "~2.4.8"
+            },
+            "suggest": {
+                "tubalmartin/cssmin": "Support minify with CSSMin (YUI PHP port)"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "min/lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Stephen Clay",
+                    "email": "steve@mrclay.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
+            "homepage": "http://code.google.com/p/minify/",
+            "time": "2017-11-03T21:04:01+00:00"
+        },
+        {
             "name": "nesbot/carbon",
             "version": "2.28.0",
             "source": {
@@ -1437,6 +1611,72 @@
                 "php"
             ],
             "time": "2019-11-08T13:50:10+00:00"
+        },
+        {
+            "name": "nojimage/twitter-text-php",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nojimage/twitter-text-php.git",
+                "reference": "ddbcbbae0d1a589d913df255c4600f154abcc423"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nojimage/twitter-text-php/zipball/ddbcbbae0d1a589d913df255c4600f154abcc423",
+                "reference": "ddbcbbae0d1a589d913df255c4600f154abcc423",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "phpunit/phpunit": "4.8.*|5.7.*|6.5.*",
+                "symfony/yaml": "~2.6.0",
+                "twitter/twitter-text": "^3.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Twitter\\Text\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Matt Sanford",
+                    "email": "matt@mzsanford.com",
+                    "homepage": "http://mzsanford.com"
+                },
+                {
+                    "name": "Mike Cochrane",
+                    "email": "mikec@mikenz.geek.nz",
+                    "homepage": "http://mikenz.geek.nz"
+                },
+                {
+                    "name": "Nick Pope",
+                    "email": "git@nickpope.me.uk",
+                    "homepage": "http://www.nickpope.me.uk"
+                },
+                {
+                    "name": "Takashi Nojima",
+                    "homepage": "http://php-tips.com"
+                }
+            ],
+            "description": "A library of PHP classes that provide auto-linking and extraction of usernames, lists, hashtags and URLs from tweets.",
+            "homepage": "https://github.com/nojimage/twitter-text-php",
+            "keywords": [
+                "autolink",
+                "extract",
+                "text",
+                "twitter"
+            ],
+            "time": "2019-01-28T04:50:15+00:00"
         },
         {
             "name": "opis/closure",

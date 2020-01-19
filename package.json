@@ -24,7 +24,9 @@
     "axios": "^0.19.1",
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
+    "flatpickr": "^4.6.3",
     "mdbootstrap": "^4.11.0",
-    "popper.js": "^1.14.3"
+    "popper.js": "^1.14.3",
+    "twitter-text": "^3.0.1"
   }
 }
