@@ -12,7 +12,7 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
-    protected $rememberTokenName = false;
+    // protected $rememberTokenName = false;
 
     /**
      * The attributes that are mass assignable.
