@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserNameMiddleware
 {
@@ -19,6 +20,7 @@ class UserNameMiddleware
         $user = $request->user();
         //ログインしていない、ユーザー名が一致していない場合
         if (!$user || $request->user_name !== $user->nickname) {
+            Log::notice($user->nickname . ':がアクセス:' . $request->url());
             return redirect()->back();
         }
         return $next($request);
