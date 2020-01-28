@@ -32,7 +32,7 @@ class TwitterService
         $tweet = $this->twitter_oauth->post("statuses/update", [
             "status" => $content,
             'in_reply_to_status_id' => $reply_to,
-            "tweet_mode" => "extended",
+            // "tweet_mode" => "extended",
         ]);
 
         return !isset($tweet->errors) ? $tweet : false;

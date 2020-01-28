@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
-use App\Http\Requests\Activity\{StoreRequest, UpdateRequest};
+use App\Http\Requests\Activity\ActivityStoreRequest;
 use Illuminate\Support\Facades\DB;
 use App\Services\{ActivityService, PostService};
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class ActivityController extends Controller
@@ -21,6 +20,7 @@ class ActivityController extends Controller
 
 	/**
 	 * 活動一覧画面
+	 * @return Illuminate\View\View|Illuminate\Contracts\View\Factory
 	 */
 	public function index()
 	{
@@ -30,82 +30,56 @@ class ActivityController extends Controller
 
 
 	/**
-	 * 活動保存
+	 * 活動の保存
+	 * @param  ActivityStoreRequest $request
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function store(StoreRequest $request)
+	public function store(ActivityStoreRequest $request)
 	{
-		$result = $this->activity_service->createActivity($request->validated());
+		$result = DB::transaction(function () use ($request) {
+			return $this->activity_service->createActivity($request->validated());
+		});
 		return redirect()->back()->with($result ? 'success' : 'error', $result ? '新規追加しました' : '追加に失敗しました');
 	}
 
 	/**
-	 * 活動表示
+	 * 活動表示と投稿の表示
+	 * @param  string $user_name
+	 * @param  string $activity_name
+	 * @return \Illuminate\Http\RedirectResponse|Illuminate\View\View|Illuminate\Contracts\View\Factory
 	 */
 	public function show(string $user_name, string $activity_name)
 	{
 		$activity = $this->activity_service->fetchOwnActivityByName($activity_name);
 		if (!$activity) {
-			return redirect()->route('activity.index');
+			return redirect()->route('activity.index', $user_name);
 		}
+		// 投稿取得
+		$posts = $activity->posts;
+		// 活動時間、日数集計
 		$total = $this->post_service->fetchTotalHour($activity->id);
+		$active_day = $this->post_service->fetchActivePostCount($activity->id);
+		$continue_days = $this->post_service->fetchContinuationDayCount($activity->id);
 
-		return view('show', compact('activity', 'total'));
-	}
-
-
-	public function update(string $user_name, string $activity_name, UpdateRequest $request)
-	{
-		// 活動、ユーザー取得
-		$activity = $this->activity_service->fetchOwnActivityByName($activity_name);
-		$user = $request->user();
-
-		// 最新の投稿のツイートID取得
-		$latest_tweet_id = null;
-		if ($request->input('is_reply')) {
-			$latest_post = $this->post_service->fetchLatestPost($activity->id);
-			$latest_tweet_id = $latest_post ? $latest_post->tweet_id : null;
-		}
-
-		// ツイートして保存
-		$post = $this->post_service->createPostAndTweet($activity->id, $request->input('tweet'), new Carbon($request->input('hour')), $latest_tweet_id);
-		if (!$post) {
-			return redirect()->back()->with('error', '投稿に失敗しました')->withInput();
-		}
-
-		// 投稿に活動時間がないか、同日に活動時間のある投稿があったら終了
-		if (!$post->hour || count($this->post_service->fetchExistHourPostByDate($activity->id, today()))) {
-			return redirect()->back()->with('success', '投稿しました');
-		}
-		// 昨日の投稿に活動時間があるなら、継続日数加算
-		if ($this->post_service->fetchExistHourPostByDate($activity->id, Carbon::yesterday())) {
-			$this->activity_service->incrementContinuationDays($activity->id);
-			$this->activity_service->incrementActivityDays($activity->id);
-		} else {
-			$this->activity_service->resetContinuationDays($activity->id);
-		}
-
-		return redirect()->back()->with('success', '投稿しました');
+		return view('show', compact('activity', 'total', 'posts', 'active_day'));
 	}
 
 	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  Activity $activity
-	 * @return \Illuminate\Http\Response
+	 * 活動の削除
+	 * @param  string $user_name
+	 * @param  int $id
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function destroy(String $user_name, Activity $activity)
+	public function destroy(string $user_name, int $id)
 	{
-		DB::beginTransaction();
-		try {
-			$activity->delete();
-			DB::commit();
-		} catch (\Exception $e) {
-			DB::rollback();
-			Log::error($e->getMessage(), [$user_name, $activity]);
-			return redirect()->back()->with('error', '活動削除に失敗しました。');
-		}
+		$result = DB::transaction(function () use ($id) {
+			return $this->activity_service->deleteById($id);
+		});
 
-		return redirect()->back()->with('success', '活動を削除しました');
+		if (!$result) {
+			return redirect()->route('activity.index', $user_name)->with('error', '活動の削除に失敗しました');
+		}
+		return redirect()->route('activity.index', $user_name)->with('success', '活動を削除しました');
 	}
 
 
@@ -113,11 +87,10 @@ class ActivityController extends Controller
 	 * ツイートの削除をする
 	 * 
 	 * @param  String $user_name
-	 * @param  Activity $activity
-	 * @param  String $id
+	 * @param  int $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function deleteTweet(String $user_name, Activity $activity, String $id)
+	public function deleteTweet(string $user_name, int $id)
 	{
 		$user = $activity->user;
 		// 消すツイート取得
