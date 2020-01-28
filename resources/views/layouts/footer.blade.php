@@ -1,30 +1,25 @@
-<!-- Footer Area Start -->
-<section class="footer-Content">
-    <div class="container">
+<div class="bg-aqua-gradiention w-100"></div>
+<footer class="page-footer font-small bg-aqua-gradiention pt-4">
+    <div class="container-fluid text-center text-md-left">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 col-mb-12">
+            <div class="col-md-6 mt-md-0 mt-3">
                 <img src="{{ asset('img/logo.png', true) }}" alt="">
+                <p>継続を記録しよう With Uroboros App</p>
+            </div>
+            <hr class="clearfix w-100 d-md-none pb-3">
+            <div class="col-md-3 mb-md-0 mb-3">
+                <h5 class="text-uppercase">Socail</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="https://twitter.com/natsume_aurlia" class="btn-floating btn-lg btn-tw" type="button"
+                            role="button"><i class="fab fa-twitter"></i></a>
+                    </li>
+
+                </ul>
             </div>
         </div>
     </div>
-    <!-- Copyright Start  -->
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="site-info float-left">
-                        <p>&copy; Uroboros All Rights Reserved.</p>
-                    </div>
-                    <div class="float-right">
-                        <ul class="footer-social">
-                            <li><a class="twitter" href="https://twitter.com/natsume_aurlia"><i
-                                        class="lni-twitter-filled fa-2x"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="text-center py-3">© {{today()->year}} Copyright:
+        <a href="{{route('top')}}"> Uroboros.site</a>
     </div>
-    <!-- Copyright End -->
-</section>
-<!-- Footer area End -->
+</footer>

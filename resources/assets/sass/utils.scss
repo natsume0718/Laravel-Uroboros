@@ -1,0 +1,8 @@
+.bg-aqua-gradiention {
+  background-image: -webkit-linear-gradient(0deg, #3c96ff 0%, #2dfbff 100%);
+}
+.text-aqua-gradiention {
+  background: -webkit-linear-gradient(0deg, #3c96ff 0%, #2dfbff 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
