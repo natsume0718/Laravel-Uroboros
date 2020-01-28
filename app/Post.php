@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Activity;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -34,15 +36,55 @@ class Post extends Model
     /**
      * 合計時間の算出
      */
-    public function scopeTotalHour(Builder $query, int $activity_id)
+    public function fetchTotalHour(int $activity_id)
     {
-        return $query->selectRaw('SEC_TO_TIME(SUM(TIME_TO_SEC(hour))) as total_hour')->where('activity_id', $activity_id)->first();
+        return $this->selectRaw('SUM(TIME_TO_SEC(hour)) as total_hour')->where('activity_id', $activity_id)->first();
+    }
+
+    /**
+     * 活動日数の取得
+     */
+    public function fetchActivePostCount(int $activity_id)
+    {
+        return $this
+            ->where('activity_id', $activity_id)
+            ->where('hour', '>', 0)
+            ->selectRaw('DATE(created_at) as date')
+            ->groupBy('date')
+            ->get()
+            ->count();
+    }
+
+    /**
+     * 活動日数の取得
+     */
+    public function fetchContinuationDayCount(int $activity_id)
+    {
+        $posts = $this
+            ->where('activity_id', $activity_id)
+            ->where('hour', '>', 0)
+            ->selectRaw('DATE(created_at) as date')
+            ->groupBy('date')
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $start = $posts->first() ? $posts->first()->date : null;
+        if (!$start) {
+            return false;
+        }
+        $start = new Carbon($start);
+        $result = $posts->filter(function ($post) use ($start) {
+            $r = $start->eq(new Carbon($post->date));
+            $start->subDay();
+            return $r;
+        });
+        return $result;
     }
 
     public function getTotalHourAttribute($value)
     {
-        // H:i:s(00:00:00)形式なので末尾3文字削る
-        return substr($value, 0, 5);
+        // H:i形式
+        return sprintf('%02d時間%02d分', ($value / 3600), ($value / 60 % 60));
     }
 
     public function scopeWhereActivity($query, int $activity_id)
