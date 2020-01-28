@@ -26,23 +26,16 @@ class ActivityService
      */
     public function createActivity(array $data)
     {
-        try {
-            DB::beginTransaction();
-            $user = Auth::user();
-            $activity = $user->activities()->create($data);
-            DB::commit();
-            return (bool) $activity;
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error($user->name . ':保存失敗');
-            return false;
-        }
+        $user = Auth::user();
+        Log::info(Auth::id() . ":新規投稿:" . json_encode($data));
+        $activity = $user->activities()->create($data);
+        return (bool) $activity;
     }
 
     /**
      * ユーザーの活動を活動名から取得
      * @param string $name
-     * @return App\Activity
+     * @return Activity
      */
     public function fetchOwnActivityByName(string $name)
     {
@@ -58,16 +51,9 @@ class ActivityService
      */
     public function incrementContinuationDays(int $activity_id, int $day = 1)
     {
-        try {
-            DB::beginTransaction();
-            $result = Activity::increment('continuation_days', $day, ['id' => $activity_id]);
-            DB::commit();
-            return (bool) $result;
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error(Auth::user()->name . ':継続日数増加失敗');
-            return false;
-        }
+        Log::info(Auth::id() . ':継続日数増加:' . $activity_id);
+        $result = Activity::whereActivity($activity_id)->whereincrement('continuation_days', $day);
+        return (bool) $result;
     }
 
     /**
@@ -77,16 +63,9 @@ class ActivityService
      */
     public function resetContinuationDays(int $activity_id)
     {
-        try {
-            DB::beginTransaction();
-            $result = Activity::where('id', $activity_id)->update(['continuation_days' => 0]);
-            DB::commit();
-            return (bool) $result;
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error(Auth::user()->name . ':継続日数リセット失敗');
-            return false;
-        }
+        Log::info(Auth::id() . ':継続日数リセット:' . $activity_id);
+        $result = Activity::whereActivity($activity_id)->update(['continuation_days' => 0]);
+        return (bool) $result;
     }
 
     /**
@@ -97,15 +76,16 @@ class ActivityService
      */
     public function incrementActivityDays(int $activity_id, int $day = 1)
     {
-        try {
-            DB::beginTransaction();
-            $result = Activity::increment('activity_days', $day, ['id' => $activity_id]);
-            DB::commit();
-            return (bool) $result;
-        } catch (\Exception $e) {
-            DB::rollback();
-            Log::error(Auth::user()->name . ':活動日数増加失敗');
-            return false;
-        }
+        Log::info(Auth::id() . ':活動日数増');
+        $result = Activity::whereActivity($activity_id)->increment('activity_days', $day);
+        return (bool) $result;
+    }
+
+    public function deleteById(int $id)
+    {
+        $user = Auth::user();
+        Log::info(Auth::id() . ':活動削除');
+        $activity = $user->activities()->findOrFail($id);
+        return $activity->delete();
     }
 }
