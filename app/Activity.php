@@ -11,6 +11,8 @@ class Activity extends Model
 {
 
     use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
@@ -35,5 +37,10 @@ class Activity extends Model
     public function scopeColumns($query)
     {
         return $query->select(['id', 'name', 'continuation_days', 'activity_days', 'user_id']);
+    }
+
+    public function scopeWhereActivity($query, int $id)
+    {
+        return $query->where('id', $id);
     }
 }
