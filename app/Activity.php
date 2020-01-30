@@ -20,8 +20,6 @@ class Activity extends Model
      */
     protected $fillable = [
         'name',
-        'continuation_days',
-        'activity_days'
     ];
 
     public function user()
@@ -36,7 +34,7 @@ class Activity extends Model
 
     public function scopeColumns($query)
     {
-        return $query->select(['id', 'name', 'continuation_days', 'activity_days', 'user_id']);
+        return $query->select(['id', 'name', 'user_id']);
     }
 
     public function scopeWhereActivity($query, int $id)
