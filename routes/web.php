@@ -13,5 +13,4 @@ Route::group(['prefix' => 'auth/twitter'], function () {
 Route::group(['prefix' => '{user_name}', 'middleware' => ['auth', 'user.name']], function () {
     Route::resource('activity', 'ActivityController')->only(['index', 'store', 'show', 'update', 'destroy']);
     Route::resource('activity/{activity}/post', 'PostController')->only(['store', 'destroy']);
-    Route::delete('tweet/{id}', 'ActivityController@deleteTweet')->name('tweet.destroy');
 });
