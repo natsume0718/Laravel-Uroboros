@@ -70,7 +70,7 @@ class Post extends Model
 
         $start = $posts->first() ? $posts->first()->date : null;
         if (!$start) {
-            return false;
+            return 0;
         }
         $start = new Carbon($start);
         $result = $posts->filter(function ($post) use ($start) {
@@ -78,7 +78,7 @@ class Post extends Model
             $start->subDay();
             return $r;
         });
-        return $result;
+        return $result->count();
     }
 
     public function getTotalHourAttribute($value)
