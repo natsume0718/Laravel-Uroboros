@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.css">
 @section('content')
 <div class="container-fluid rgba-grey-slight">
 	@include('components.message')
@@ -19,7 +18,7 @@
 				<ul class="list-group">
 					<li class="list-group-item">合計時間：{{ $total->total_hour ?? 0 }}</li>
 					<li class="list-group-item">活動日数：{{ $active_day }} 日</li>
-					<li class="list-group-item">継続日数：{{ $activity->continuation_days }} 日</li>
+					<li class="list-group-item">継続日数：{{ $continuation_days }} 日</li>
 				</ul>
 				{!! Form::label('disp', '前回の投稿をフォームに表示：') !!}
 				{!! Form::checkbox('disp', old('disp'),false, ['id'=>'js-check']) !!}
@@ -61,70 +60,12 @@
 				{!! Form::close() !!}
 			</div>
 		</div>
-		<div class="col-lg-4 col-md-12 col-xs-12">
-			<canvas id="Chart" style="max-width: 500px;"></canvas>
-		</div>
 	</div>
-	<canvas id="myChart" width="400" height="400"></canvas>
-	<div class="row justify-content-center">
-		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-			<div class="table-responsive" style="height:40vh; overflow: scroll; margin-top:1em;">
-				<table class="table table-stiped table-bordered" style="background-color:white;">
-					<tr>
-						<th>ユーザー</th>
-						<th>活動内容</th>
-						<th>投稿時刻</th>
-						<th>活動時間</th>
-						<th></th>
-						<th></th>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
+	@if($posts && $posts->isNotEmpty())
+	@include('components.postsTable',compact('posts','activity'))
+	@endempty
 </div>
 @endsection
 @push('scripts')
 <script src="{{ mix('js/activity/app.js') }}" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<script>
-	var ctx = document.getElementById('myChart');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-</script>
-
 @endpush

@@ -23,7 +23,7 @@
 </head>
 
 <body>
-
+	@include('layouts.nav')
 	<div id="notfound">
 		<div class="notfound">
 			<div class="notfound-404">
