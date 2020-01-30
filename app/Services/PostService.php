@@ -96,7 +96,7 @@ class PostService
     public function destroyOwnPost(int $post_id)
     {
         $user = Auth::user();
-        $post = user()->posts()->findOrFail($post_id);
+        $post = $user->posts()->findOrFail($post_id);
         // ツイートも削除
         $twitter_oauth = new TwitterService($user->token, $user->token_secret);
         $twitter_oauth->destroyTweet($post->tweet_id);
