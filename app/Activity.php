@@ -22,11 +22,17 @@ class Activity extends Model
         'name',
     ];
 
+    /**
+     * ユーザーへのリレーション
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * 投稿へのリレーション
+     */
     public function posts()
     {
         return $this->hasMany(Post::class);

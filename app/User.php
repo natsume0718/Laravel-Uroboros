@@ -37,13 +37,16 @@ class User extends Authenticatable
         'deleted_at'
     ];
 
+    /**
+     * 活動へのリレーション
+     */
     public function activities()
     {
         return $this->hasMany(Activity::class);
     }
 
     /**
-     * ポストを取得
+     * 投稿へのリレーション
      */
     public function posts()
     {
