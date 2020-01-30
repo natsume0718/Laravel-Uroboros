@@ -22,7 +22,9 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             $table->foreign('activity_id')
-                ->references('id')->on('activities');
+                ->references('id')
+                ->on('activities')
+                ->onDelete('cascade');
         });
     }
 
