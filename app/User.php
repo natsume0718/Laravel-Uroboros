@@ -41,4 +41,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity::class);
     }
+
+    /**
+     * ポストを取得
+     */
+    public function posts()
+    {
+        return $this->hasManyThrough(Post::class, Activity::class);
+    }
 }
