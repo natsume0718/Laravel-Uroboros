@@ -58,22 +58,14 @@ class PostService
      */
     public function createPostAndTweet(int $activity_id, string $tweet_content, Carbon $hour, int $reply_to = null)
     {
-        $user = Auth::user();
-        $twitter_oauth = new TwitterService($user->token, $user->token_secret);
-        // つぶやく
-        $tweet = $twitter_oauth->tweet($tweet_content, $reply_to);
-        if (!$tweet) {
-            return null;
-        }
-        Log::info($user->id . 'がツイート:' . json_encode($tweet));
         try {
-            // 保存
-            Log::info($user->id . ':投稿保存' . json_encode([
-                'content' => $tweet_content,
-                'hour' => $hour->format('H:i'),
-                'activity_id' => $activity_id,
-                'tweet_id' => $tweet->id
-            ]));
+            $user = Auth::user();
+            $twitter_oauth = new TwitterService($user->token, $user->token_secret);
+            // つぶやく
+            $tweet = $twitter_oauth->tweet($tweet_content, $reply_to);
+            if (!$tweet) {
+                return null;
+            }
             $post = Post::create([
                 'content' => $tweet_content,
                 'hour' => $hour->format('H:i'),
@@ -82,9 +74,10 @@ class PostService
             ]);
             return $tweet && $post ? $post : null;
         } catch (\Exception $e) {
-            $twitter_oauth->destroyTweet($tweet->id);
+            $result = $twitter_oauth->destroyTweet($tweet->id);
             Log::error('保存失敗' . $e->getMessage());
-            return null;
+            Log::notice('ツイート削除結果：' . $result);
+            throw $e;
         }
     }
 
@@ -98,5 +91,11 @@ class PostService
     {
         $date = $date->toDateString();
         return Post::columns()->whereActivity($activity_id)->whereCreated($date)->existHour()->get();
+    }
+
+    public function destroyOwnPost(int $post_id)
+    {
+        $post = Auth::user()->posts()->findOrFail($post_id);
+        return $post->delete();
     }
 }
