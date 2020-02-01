@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Post\PostStoreRequest;
 use App\Services\{PostService, ActivityService};
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
@@ -50,5 +51,19 @@ class PostController extends Controller
             return redirect()->route('activity.show', [$user_name, $activity_name])->with('error', '投稿の削除に失敗しました');
         }
         return redirect()->route('activity.show', [$user_name, $activity_name])->with('success', '投稿を削除しました');
+    }
+
+    public function fetchLatest(string $user_name, string $activity_name, Request $request)
+    {
+        if (!$request->ajax()) {
+            abort(404);
+        }
+        // 活動、ユーザー取得
+        $activity = $this->activity_service->fetchOwnActivityByName($activity_name, false);
+        if (!$activity) {
+            abort(404);
+        }
+        $post = $this->post_service->fetchLatestPost($activity->id);
+        return response()->json($post);
     }
 }
