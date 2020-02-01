@@ -1,6 +1,7 @@
 <tr>
     <td>
-        <img src="{{ $user->avatar }}" alt=""><span>{{ $user->nickname }}</span>
+        <img src="{{ $user->avatar }}" alt="">
+        <span class="ml-2">{{ $user->nickname }}</span>
     </td>
     <td>{!! nl2br(e($post->content)) !!}</td>
     <td>{{ $post->created_at }}</td>
