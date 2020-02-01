@@ -24,6 +24,7 @@
 		@include('layouts.nav')
 		<!-- Header Section End -->
 	</header>
+	@include('sweetalert::alert')
 	@yield('content')
 	<!-- Footer Section Start -->
 	@include('layouts.footer')

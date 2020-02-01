@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container-fluid bg-aqua-gradiention">
-	@include('components.message')
 	<div class="row pt-5">
 		<div class="col-lg-5 col-md-12 col-xs-12">
 			<h1 class="h1 text-white font-weight-bold">継続を記録しよう<br> With

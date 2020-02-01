@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container-fluid rgba-grey-slight">
-	@include('components.message')
 	<div class="row">
 		<div class="col-lg-4 col-md-12 col-xs-12"></div>
 		<div class="col-lg-4 col-md-12 col-xs-12 text-center my-4">

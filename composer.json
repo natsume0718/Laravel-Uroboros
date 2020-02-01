@@ -14,7 +14,8 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.0",
-        "nojimage/twitter-text-php": "^3.0"
+        "nojimage/twitter-text-php": "^3.0",
+        "realrashid/sweet-alert": "^3.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
