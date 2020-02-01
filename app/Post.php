@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *

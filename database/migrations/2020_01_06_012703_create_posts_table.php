@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->unsignedInteger('activity_id');
             $table->string('tweet_id')->comment('tweet id');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('activity_id')
                 ->references('id')
