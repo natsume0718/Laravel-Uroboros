@@ -36,10 +36,14 @@ class ActivityService
      * @param string $name
      * @return Activity
      */
-    public function fetchOwnActivityByName(string $name)
+    public function fetchOwnActivityByName(string $name, bool $relation = true)
     {
         $user = Auth::user();
-        return Activity::with(['posts'])->columns()->where('user_id', $user->id)->where('name', $name)->first();
+        $query = Activity::query();
+        if ($relation) {
+            $query->with(['posts']);
+        }
+        return $query->columns()->where('user_id', $user->id)->where('name', $name)->first();
     }
 
     public function deleteById(int $id)
