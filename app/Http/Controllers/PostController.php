@@ -41,6 +41,7 @@ class PostController extends Controller
 
     public function destroy(string $user_name, string $activity_name, int $id)
     {
+        // 投稿の削除
         $result = DB::transaction(function () use ($id) {
             return $this->post_service->destroyOwnPost($id);
         });
