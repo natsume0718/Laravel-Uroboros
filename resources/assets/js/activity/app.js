@@ -14,7 +14,7 @@ $(function () {
     }
     $('.js-flatpickr-time').flatpickr(config);
 
-    $('#js-countText').on('keyup', function () {
+    $('#js-countText').on('keyup , change', function () {
         const content = $(this).val();
         const validContent = twitter.parseTweet(content);
         // 送信ボタン活性非活性
@@ -22,5 +22,16 @@ $(function () {
         // 文字数カウント
         $('#js-showCountText').html(validContent.weightedLength / 2);
     })
+    $('#js-fetchPrevContent').on('click', function () {
+        $.ajax({
+            type: "get",
+            url: $(this).data('url'),
+        }).then(function (data) {
+            if (data.content) {
+                $('#js-CountText').val(data.content);
+            }
+        }, function () { });
+    })
+
 
 })
