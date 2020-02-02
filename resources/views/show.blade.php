@@ -34,7 +34,7 @@
 				<div class="form-group">
 					{!! Form::label('tweet', '※活動内容をTwitterに投稿：') !!}
 					{!! Form::textarea('tweet', old('name'), ['class' =>
-					'form-control','id'=>'js-countText','rows'=>5]) !!}
+					'form-control js-displayPrev','id'=>'js-countText','rows'=>5]) !!}
 					<div class="d-flex w-100 justify-content-between">
 						<span class="btn btn-sm btn-info" id="js-fetchPrevContent"
 							data-url="{{route('post.latest',[$user->nickname,$activity->name])}}">前回の投稿をフォームに表示</span>

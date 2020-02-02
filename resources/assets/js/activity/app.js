@@ -28,9 +28,11 @@ $(function () {
             url: $(this).data('url'),
         }).then(function (data) {
             if (data.content) {
-                $('#js-CountText').val(data.content);
+                $('.js-displayPrev').val(data.content).trigger('change');
             }
-        }, function () { });
+        }, function () {
+                alert('投稿の取得に失敗しました');
+        });
     })
 
 
