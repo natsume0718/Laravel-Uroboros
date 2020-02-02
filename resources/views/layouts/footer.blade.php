@@ -8,7 +8,7 @@
             </div>
             <hr class="clearfix w-100 d-md-none pb-3">
             <div class="col-md-3 mb-md-0 mb-3">
-                <h5 class="text-uppercase">Socail</h5>
+                <h5 class="text-uppercase">Social</h5>
                 <ul class="list-unstyled">
                     <li>
                         <a href="https://twitter.com/natsume_aurlia" class="btn-floating btn-lg btn-tw" type="button"
