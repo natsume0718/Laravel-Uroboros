@@ -33,7 +33,7 @@ class PostService
      */
     public function fetchLatestPost(int $activity_id)
     {
-        return Post::columns()->whereActivity($activity_id)->first();
+        return Post::columns()->whereActivity($activity_id)->latest()->first();
     }
 
     /**

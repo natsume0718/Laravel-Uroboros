@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
         <div class="table-responsive-md mt-2 vh-50">
-            <table class="table table-stiped table-bordered bg-white">
+            <table class="table table-stiped table-bordered bg-white table-responsive">
                 <thead>
                     <tr>
                         <th>ユーザー</th>

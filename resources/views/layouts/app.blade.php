@@ -11,7 +11,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	{{-- description --}}
 	<meta name="keywords" content="継続,習慣,積み上げ,学習">
-	<meta name=”description” content=”継続を記録して、Twitterに投稿しよう。使い方は簡単、3秒でログイン・登録して活動内容を記録するだけ。時間や日数が積み上がっていきます”>
+	<meta name="description" content="継続を記録して、Twitterに投稿しよう。使い方は簡単、3秒でログイン・登録して活動内容を記録するだけ。時間や日数が積み上がっていきます">
 	<title>{{ config('app.name', 'Laravel') }}</title>
 	<link rel="icon" type="shortcut icon" href="/favicon.ico">
 	<!-- Styles -->
